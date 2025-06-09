@@ -1,19 +1,21 @@
 #!/bin/sh
 
 case "$1" in
-	start)
-		echo "Starting aesdsocket"
-		start-stop-daemon -S -n aesdsocket -a /usr/bin/aesdsocket -- -d
-		aesdchar_load
-		;;
-	stop)
-		echo "Stopping aesdsocket"
-		killall -TERM aesdsocket
-		aesdchar_unload
-		;;
-	*)
-		echo "Usage: $0 {start|stop}"
-	exit 1
+  start)
+    echo "Loading aesdchar module..."
+    aesdchar_load
+    ;;
+  stop)
+    echo "Unloading aesdchar module..."
+    aesdchar_unload
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
 esac
 
 exit 0
